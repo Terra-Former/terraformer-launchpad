@@ -1,10 +1,13 @@
-# Pylon protocol contracts
+# Terraformer Token Sale
 
-## Components
+This repository reflects the core contracts of the launchpad element of Terraformer.
 
-* [Core](./contracts/core) - Official implementation of Pylon Protocol
-* [Gateway](./contracts/gateway) - Contracts for pylon gateway
-* [Pylon](./contracts/pylon) - Contracts for pylon token utilities
+The used contracts are forked from [Pylon Protocol](https://www.pylon.money/) and are using the
+
+Gateway Swap
+Cap-Fixed Strategy
+
+contracts.
 
 ## Development
 
@@ -53,12 +56,8 @@ For production builds, run the following:
 docker run --rm -v "$(pwd)":/code \
   --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
   --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
-  cosmwasm/workspace-optimizer:0.10.4
+  cosmwasm/workspace-optimizer:0.12.3
 ```
 
 This performs several optimizations which can significantly reduce the final size of the contract binaries, which will
 be available inside the `artifacts/` directory.
-
-## License
-
-MIT @Pylon Protocol
