@@ -1,12 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Config",
+  "title": "InstantiateMsg",
   "type": "object",
   "required": [
     "beneficiary",
     "distribution_strategy",
-    "finish",
-    "owner",
+    "period",
+    "pool_liq_x",
+    "pool_liq_y",
+    "pool_x_denom",
+    "pool_y_addr",
     "price",
     "start",
     "swap_pool_size",
@@ -28,12 +31,21 @@
         "$ref": "#/definitions/Strategy"
       }
     },
-    "finish": {
+    "period": {
       "type": "integer",
       "format": "uint64",
       "minimum": 0.0
     },
-    "owner": {
+    "pool_liq_x": {
+      "$ref": "#/definitions/Uint256"
+    },
+    "pool_liq_y": {
+      "$ref": "#/definitions/Uint256"
+    },
+    "pool_x_denom": {
+      "type": "string"
+    },
+    "pool_y_addr": {
       "type": "string"
     },
     "price": {

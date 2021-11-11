@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExecuteMsg",
+  "anyOf": [
+    {
+      "type": "object",
+      "required": [
+        "configure"
+      ],
+      "properties": {
+        "configure": {
+          "$ref": "#/definitions/ConfigureMsg"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "deposit"
+      ],
+      "properties": {
+        "deposit": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "claim"
+      ],
+      "properties": {
+        "claim": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "earn"
+      ],
+      "properties": {
+        "earn": {
+          "type": "object",
+          "required": [
+            "amount"
+          ],
+          "properties": {
+            "amount": {
+              "$ref": "#/definitions/Uint256"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  ],
+  "definitions": {
+    "ConfigureMsg": {
+      "anyOf": [
+        {
+          "type": "object",
+          "required": [
+            "swap"
+          ],
+          "properties": {
+            "swap": {
+              "type": "object",
+              "properties": {
+                "beneficiary": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "cap_strategy": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "owner": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "whitelist_enabled": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "pool"
+          ],
+          "properties": {
+            "pool": {
+              "type": "object",
+              "properties": {
+                "liq_x": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/Uint256"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "liq_y": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/Uint256"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "x_denom": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "y_addr": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "whitelist"
+          ],
+          "properties": {
+            "whitelist": {
+              "type": "object",
+              "required": [
+                "candidates",
+                "whitelist"
+              ],
+              "properties": {
+                "candidates": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "whitelist": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Uint256": {
+      "type": "string"
+    }
+  }
+}

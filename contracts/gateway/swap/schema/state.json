@@ -1,47 +1,36 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "InitMsg",
+  "title": "State",
   "type": "object",
   "required": [
-    "beneficiary",
     "liq_x",
     "liq_y",
-    "period",
-    "start",
+    "total_claimed",
+    "total_swapped",
     "x_denom",
     "y_addr"
   ],
   "properties": {
-    "beneficiary": {
-      "$ref": "#/definitions/HumanAddr"
-    },
     "liq_x": {
       "$ref": "#/definitions/Uint256"
     },
     "liq_y": {
       "$ref": "#/definitions/Uint256"
     },
-    "period": {
-      "type": "integer",
-      "format": "uint64",
-      "minimum": 0.0
+    "total_claimed": {
+      "$ref": "#/definitions/Uint256"
     },
-    "start": {
-      "type": "integer",
-      "format": "uint64",
-      "minimum": 0.0
+    "total_swapped": {
+      "$ref": "#/definitions/Uint256"
     },
     "x_denom": {
       "type": "string"
     },
     "y_addr": {
-      "$ref": "#/definitions/HumanAddr"
+      "type": "string"
     }
   },
   "definitions": {
-    "HumanAddr": {
-      "type": "string"
-    },
     "Uint256": {
       "type": "string"
     }

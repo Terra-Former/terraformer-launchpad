@@ -1,12 +1,10 @@
 use cosmwasm_bignumber::Uint256;
 use cosmwasm_std::*;
 use cw20::Cw20ExecuteMsg;
-use pylon_gateway::swap_msg::Strategy;
 use pylon_utils::tax::deduct_tax;
 
 use crate::error::ContractError;
 use crate::querier::strategy;
-use crate::querier::vpool;
 use crate::state::{config, state, user};
 
 pub fn deposit(deps: DepsMut, env: Env, info: MessageInfo) -> Result<Response, ContractError> {
@@ -85,83 +83,6 @@ pub fn deposit(deps: DepsMut, env: Env, info: MessageInfo) -> Result<Response, C
         .add_attribute("swapped_out", swapped_out.to_string()))
 }
 
-pub fn withdraw(
-    deps: DepsMut,
-    env: Env,
-    info: MessageInfo,
-    amount: Uint256,
-) -> Result<Response, ContractError> {
-    // xyk
-    let sender = &deps.api.addr_canonicalize(info.sender.as_str()).unwrap();
-    let config = config::read(deps.storage).load().unwrap();
-    for strategy in config.distribution_strategy.iter() {
-        match strategy {
-            Strategy::Lockup { release_time, .. } => {
-                if release_time < &env.block.time.seconds() {
-                    return claim(deps, env, info);
-                }
-            }
-            Strategy::Vesting {
-                release_start_time, ..
-            } => {
-                if release_start_time < &env.block.time.seconds() {
-                    return claim(deps, env, info);
-                }
-            }
-        }
-    }
-    let mut user = user::read(deps.storage, sender).unwrap();
-    let mut state = state::read(deps.storage).load().unwrap();
-
-    if !user.swapped_out_claimed.is_zero() {
-        return Err(ContractError::NotAllowWithdrawAfterClaim {});
-    }
-
-    if user.swapped_in < amount * config.price {
-        return Err(ContractError::WithdrawAmountExceeded {
-            available: user.swapped_in,
-        });
-    }
-
-    let withdraw_amount = vpool::calculate_withdraw_amount(&state, &amount)?;
-    let penalty = (amount * config.price) - withdraw_amount;
-
-    user.swapped_out = user.swapped_out - amount;
-    user.swapped_in = user.swapped_in - (amount * config.price);
-    state.total_swapped = state.total_swapped - amount;
-    state.liq_x = state.liq_x - withdraw_amount;
-    state.liq_y += amount;
-
-    user::store(deps.storage, sender, &user)?;
-    state::store(deps.storage).save(&state)?;
-
-    Ok(Response::new()
-        .add_message(CosmosMsg::Bank(BankMsg::Send {
-            to_address: info.sender.to_string(),
-            amount: vec![deduct_tax(
-                deps.as_ref(),
-                Coin {
-                    denom: state.x_denom.clone(),
-                    amount: withdraw_amount.into(),
-                },
-            )?],
-        }))
-        .add_message(CosmosMsg::Bank(BankMsg::Send {
-            to_address: config.beneficiary,
-            amount: vec![deduct_tax(
-                deps.as_ref(),
-                Coin {
-                    denom: state.x_denom,
-                    amount: penalty.into(),
-                },
-            )?],
-        }))
-        .add_attribute("action", "withdraw")
-        .add_attribute("sender", info.sender.to_string())
-        .add_attribute("amount", withdraw_amount.to_string())
-        .add_attribute("penalty", penalty.to_string()))
-}
-
 pub fn claim(deps: DepsMut, env: Env, info: MessageInfo) -> Result<Response, ContractError> {
     let sender = &deps.api.addr_canonicalize(info.sender.as_str()).unwrap();
     let mut user = user::read(deps.storage, sender).unwrap();
@@ -193,7 +114,7 @@ pub fn claim(deps: DepsMut, env: Env, info: MessageInfo) -> Result<Response, Con
         .add_attribute("amount", claimable_token.to_string()))
 }
 
-pub fn earn(deps: DepsMut, _env: Env, info: MessageInfo) -> Result<Response, ContractError> {
+pub fn earn(deps: DepsMut, _env: Env, info: MessageInfo, amount: Uint256) -> Result<Response, ContractError> {
     let config = config::read(deps.storage).load().unwrap();
     let state = state::read(deps.storage).load().unwrap();
     if config.beneficiary != info.sender {
@@ -204,7 +125,7 @@ pub fn earn(deps: DepsMut, _env: Env, info: MessageInfo) -> Result<Response, Con
         });
     }
 
-    let earn_amount = state.total_claimed * config.price;
+    let earn_amount = amount;
     Ok(Response::new()
         .add_message(CosmosMsg::Bank(BankMsg::Send {
             to_address: config.beneficiary,

@@ -91,9 +91,8 @@ pub fn execute(
             }
         }
         ExecuteMsg::Deposit {} => ExecHandler::deposit(deps, env, info),
-        ExecuteMsg::Withdraw { amount } => ExecHandler::withdraw(deps, env, info, amount),
         ExecuteMsg::Claim {} => ExecHandler::claim(deps, env, info),
-        ExecuteMsg::Earn {} => ExecHandler::earn(deps, env, info),
+        ExecuteMsg::Earn {amount} => ExecHandler::earn(deps, env, info, amount),
     }
 }
 

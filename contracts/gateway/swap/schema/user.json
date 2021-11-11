@@ -3,11 +3,23 @@
   "title": "User",
   "type": "object",
   "required": [
-    "amount"
+    "swapped_in",
+    "swapped_out",
+    "swapped_out_claimed",
+    "whitelisted"
   ],
   "properties": {
-    "amount": {
+    "swapped_in": {
       "$ref": "#/definitions/Uint256"
+    },
+    "swapped_out": {
+      "$ref": "#/definitions/Uint256"
+    },
+    "swapped_out_claimed": {
+      "$ref": "#/definitions/Uint256"
+    },
+    "whitelisted": {
+      "type": "boolean"
     }
   },
   "definitions": {

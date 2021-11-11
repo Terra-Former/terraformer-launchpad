@@ -58,9 +58,8 @@ pub enum ConfigureMsg {
 pub enum ExecuteMsg {
     Configure(ConfigureMsg),
     Deposit {},
-    Withdraw { amount: Uint256 },
     Claim {},
-    Earn {},
+    Earn { amount: Uint256 },
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
