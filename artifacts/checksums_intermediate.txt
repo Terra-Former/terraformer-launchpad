@@ -1,0 +1,2 @@
+ca9e1780c18d00db5c31b57815c7bb1d65a64d670e42b728b9928e9298f03ea0  ./target/wasm32-unknown-unknown/release/gateway_strategy_fixed_cap.wasm
+d8339807dae55d336958b98867d379a685ddebfa8b62aacc2711630c6dd900cd  ./target/wasm32-unknown-unknown/release/gateway_swap.wasm

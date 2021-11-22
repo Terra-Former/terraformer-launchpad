@@ -1,3 +1,4 @@
+// Modifications copyright (C) 2021 Terraformer Corp.
 use cosmwasm_bignumber::Uint256;
 use cosmwasm_std::*;
 use cw20::Cw20ExecuteMsg;

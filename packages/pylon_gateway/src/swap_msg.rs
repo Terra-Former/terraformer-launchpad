@@ -1,3 +1,4 @@
+// Modifications copyright (C) 2021 Terraformer Corp.
 use cosmwasm_bignumber::{Decimal256, Uint256};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};

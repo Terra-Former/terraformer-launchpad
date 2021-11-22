@@ -1,0 +1,2 @@
+0425b2a5e7b975a5d77caf3a13fac82a76248914ece3eb5c5e463a9290f28793  gateway_strategy_fixed_cap.wasm
+cd1d9825d61a18f4ed07f88c4bf7b930372e751927b545a9f2e21d4f4934d513  gateway_swap.wasm
