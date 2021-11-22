@@ -11,6 +11,40 @@ contracts.
 
 ## Development
 
+### Contract Verification
+
+#### gateway_strategy_fixed.wasm 
+
+Checksum: 0425b2a5e7b975a5d77caf3a13fac82a76248914ece3eb5c5e463a9290f28793
+
+https://lcd.terra.dev/wasm/codes/1325
+
+{"height":"5397357","result":{
+"code_id": "1325",
+"code_hash": "BCWypee5daXXfK86E/rIKnYkiRTs4+tcXkY6kpDyh5M=",
+"creator": "terra16k0mnlqd36a4v3t3m62057wkxjxy46s7ppjj4m"
+}}
+
+Base64 to Hex of BCWypee5daXXfK86E/rIKnYkiRTs4+tcXkY6kpDyh5M=
+
+0425b2a5e7b975a5d77caf3a13fac82a76248914ece3eb5c5e463a9290f28793
+
+#### gateway_swap.wasm
+
+Checksum: cd1d9825d61a18f4ed07f88c4bf7b930372e751927b545a9f2e21d4f4934d513
+
+https://lcd.terra.dev/wasm/codes/1326
+
+{"height":"5397412","result":{
+"code_id": "1326",
+"code_hash": "zR2YJdYaGPTtB/iMS/e5MDcudRkntUWp8uIdT0k01RM=",
+"creator": "terra16k0mnlqd36a4v3t3m62057wkxjxy46s7ppjj4m"
+}}
+
+Base64 to Hex of BCWypee5daXXfK86E/rIKnYkiRTs4+tcXkY6kpDyh5M=
+
+cd1d9825d61a18f4ed07f88c4bf7b930372e751927b545a9f2e21d4f4934d513
+
 ### Environment Setup
 
 - Rust v1.44.1+
